@@ -10,4 +10,6 @@
     <color name="red">#d9534f</color>
     <color name="navy">#363b74</color>
     <color name="mint">#d4ffea</color>
+    <color name="light_blue">#48cae4</color>
+    <color name="dark_green">#0f4c5c</color>
 </resources>
