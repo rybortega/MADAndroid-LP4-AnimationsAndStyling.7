@@ -8,7 +8,7 @@ README templates: <a href = "https://courses.codepath.org/snippets/mobile_app_de
 A simple Flashcard app that allows users to create and edit their own flashcard.
 
 ### App Walk-though
-<img src="https://i.imgur.com/xSqrBwP.gif" width=500><br>
+<img src="https://i.imgur.com/xSqrBwP.gif" width=900><br>
 
 ## Required
 - [x] User can click on a ‘+’ button that takes the user to new ‘Add Card Screen’
