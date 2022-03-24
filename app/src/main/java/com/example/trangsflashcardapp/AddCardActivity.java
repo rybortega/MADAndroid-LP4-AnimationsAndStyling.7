@@ -36,6 +36,7 @@ public class AddCardActivity extends AppCompatActivity {
                 String question = ((EditText) findViewById(R.id.editQuestion)).getText().toString();
                 String answerRight = ((EditText) findViewById(R.id.editAnswerRight)).getText().toString();
                 String answerWrong1 = ((EditText) findViewById(R.id.editAnswerWrong1)).getText().toString();
+
                 String answerWrong2 = ((EditText) findViewById(R.id.editAnswerWrong2)).getText().toString();
                 if (question.equals("") || answerRight.equals("") || answerWrong1.equals("") || answerWrong2.equals("")){
                     Toast toast = Toast.makeText(getApplicationContext(), "You need to enter both Question & Answer", Toast.LENGTH_SHORT);

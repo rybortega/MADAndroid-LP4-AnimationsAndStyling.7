@@ -36,38 +36,39 @@
     <TextView
         android:id="@+id/flashcard_answer1"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:layout_below="@id/flashcard_question"
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
         android:background="#d4ffea"
         android:gravity="center"
         android:text="Bill Clinton"
         android:textColor="@color/navy"
-        android:textSize="40sp" />
+        android:textSize="30sp" />
     <TextView
         android:id="@+id/flashcard_answer2"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@id/flashcard_question"
-        android:layout_marginTop="110dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/flashcard_answer1"
+        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="20dp"
         android:background="#d4ffea"
         android:gravity="center"
         android:text="George H. W. Bush"
         android:textColor="@color/navy"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
     <TextView
         android:id="@+id/flashcard_answer3"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@id/flashcard_question"
-        android:layout_marginTop="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/flashcard_answer2"
+        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="20dp"
         android:background="#d4ffea"
         android:gravity="center"
         android:text="Barack Obama"
         android:textColor="@color/navy"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
 
     <ImageView
         android:id="@+id/toggle_choices_visibility"
@@ -75,7 +76,7 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
         android:src="@drawable/ic_iconmonstr_eye_8" />
 
     <ImageView
@@ -98,5 +99,24 @@
         android:layout_marginBottom="20dp"
         android:src="@drawable/icon_edit" />
 
+    <ImageView
+        android:id="@+id/next_btn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/flashcard_answer3"
+        android:src="@drawable/icon_next" />
+
+    <ImageView
+        android:id="@+id/delete_btn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/flashcard_answer3"
+        android:src="@drawable/icon_delete" />
 
 </RelativeLayout>
