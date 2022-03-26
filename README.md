@@ -2,6 +2,27 @@
 
 README templates: <a href = "https://courses.codepath.org/snippets/mobile_app_design/readme_templates_android/03_lab_3_readme.md?raw=true">Lab 3</a> - <a href = "https://courses.codepath.org/snippets/mobile_app_design/readme_templates_android/04_lab_4_readme.md?raw=true">Lab 4</a>
 
+## Lab 3
+
+### App Description
+A simple Flashcard app that allows users to create multiple cards, delete cards, show random cards with multiple choice.
+
+### App Walk-though
+
+<img src="https://i.imgur.com/3dQ0v9X.gif" width=900><br>
+
+## Required
+- [x] User can create a card and still see their created card when the app is relaunched.
+- [x] User can create muliple cards and browse through all created cards
+
+## Optional
+- [x] User can delete a card and no longer see it in their deck anymore
+- [x] Flashcards are shown in random order instead of the order they were created in
+- [x] User can edit a card and see the edit saved when they browse through their deck of cards
+- [x] User can create flashcards with multiple answers and be able to browse through cards with multiple choice answers shown
+
+
+
 ## Lab 2
 
 ### App Description
