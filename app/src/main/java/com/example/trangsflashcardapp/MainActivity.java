@@ -2,6 +2,7 @@ package com.example.trangsflashcardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SearchRecentSuggestionsProvider;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
     FlashcardDatabase flashcardDatabase;
     List<Flashcard> allFlashcards;
     int currentCardDisplayedIndex = 0;
+
+    int ADD_CARD_REQUEST_CODE = 0 ;
+    int EDIT_CARD_REQUEST_CODE = 1;
+
+    Flashcard cardToEdit ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,25 +119,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
-                MainActivity.this.startActivityForResult(intent, 100);
-                currentCardDisplayedIndex -= 1;
-
+                MainActivity.this.startActivityForResult(intent, ADD_CARD_REQUEST_CODE);
+                currentCardDisplayedIndex = allFlashcards.size();
             }
         });
 
         findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
+
+
                 String question = questionTextView.getText().toString();
                 String answerRight = answerTextView.getText().toString();
                 String answerWrong1 = answer2TextView.getText().toString();
                 String answerWrong2 = answer3TextView.getText().toString();
+
+
+
                 intent.putExtra("question", question);
                 intent.putExtra("answerRight", answerRight);
                 intent.putExtra("answerWrong1", answerWrong1);
                 intent.putExtra("answerWrong2", answerWrong2);
-                MainActivity.this.startActivityForResult(intent, 100);
+
+
+                for(int i = 0; i < allFlashcards.size(); i++){
+                    if(allFlashcards.get(i).getQuestion() == questionTextView.getText()){
+                        cardToEdit = allFlashcards.get(i);
+                        break;
+                    }
+                }
+
+
+                MainActivity.this.startActivityForResult(intent, EDIT_CARD_REQUEST_CODE);
+
             }
         });
 
@@ -153,25 +175,33 @@ public class MainActivity extends AppCompatActivity {
                 if (allFlashcards.size() == 0) {
                     return;
                 }
-                //advance to the next card
-                currentCardDisplayedIndex += 1;
-//                currentCardDisplayedIndex = getRandomNumber(allFlashcards.size() - 1, 0);
+
+                // SHOW FLASHCARDS IN ORDER
+
+//                advance our pointer index so we can show the next card
+//                currentCardDisplayedIndex += 1;
+
+//                make sure we don't get an IndexOutOfBoundsError if we are viewing the last indexed card in our list
+//                if (currentCardDisplayedIndex >= allFlashcards.size() || currentCardDisplayedIndex == 0) {
+//                    Snackbar.make(questionTextView, "You've reached the last card, going back to start",
+//                            Snackbar.LENGTH_SHORT)
+//                            .show();
+//                    currentCardDisplayedIndex = 0;
+//                }
 
 
-                if (currentCardDisplayedIndex >= allFlashcards.size() || currentCardDisplayedIndex == 0) {
-                    Snackbar.make(questionTextView, "You've reached the last card, going back to start",
-                            Snackbar.LENGTH_SHORT)
-                            .show();
-                    currentCardDisplayedIndex = 0;
+                int randomIndex = getRandomNumber(0, allFlashcards.size() - 1);
+
+                while (randomIndex == currentCardDisplayedIndex){
+                    randomIndex = getRandomNumber(0, allFlashcards.size() - 1);
                 }
-
-
-                Flashcard currentCard = allFlashcards.get(currentCardDisplayedIndex);
+                Flashcard currentCard = allFlashcards.get(randomIndex);
                 questionTextView.setText(currentCard.getQuestion());
                 answerTextView.setText(currentCard.getAnswer());
                 answer1TextView.setText(currentCard.getAnswer());
                 answer2TextView.setText(currentCard.getWrongAnswer1());
                 answer3TextView.setText(currentCard.getWrongAnswer2());
+                currentCardDisplayedIndex = randomIndex;
 
             }
         });
@@ -185,8 +215,8 @@ public class MainActivity extends AppCompatActivity {
                 allFlashcards = flashcardDatabase.getAllCards();
 
                 if (allFlashcards.size() == 0) {
-                    Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
-                    MainActivity.this.startActivityForResult(intent, 100);
+                    Intent intent = new Intent(MainActivity.this, EmptyState.class);
+                    MainActivity.this.startActivity(intent);
                 }
 
                 currentCardDisplayedIndex -= 1;
@@ -204,10 +234,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 || resultCode == RESULT_OK) { // this 100 needs to match the 100 we used when we called startActivityForResult!
+        if (requestCode == ADD_CARD_REQUEST_CODE && resultCode == RESULT_OK) { // this 100 needs to match the 100 we used when we called startActivityForResult!
             if (data != null) {
                 String question = data.getExtras().getString("question"); // 'question' needs to match the key we used when we put the string in the Intent
                 String answerRight = data.getExtras().getString("answerRight");
@@ -231,10 +262,32 @@ public class MainActivity extends AppCompatActivity {
                 answer2TextView.setBackgroundColor(getResources().getColor(R.color.mint));
                 answer3TextView.setBackgroundColor(getResources().getColor(R.color.mint));
 
-
                 flashcardDatabase.insertCard(new Flashcard(question, answerRight, answerWrong1, answerWrong2));
                 allFlashcards = flashcardDatabase.getAllCards();
             }
+        } else if (requestCode == EDIT_CARD_REQUEST_CODE && resultCode == RESULT_OK){
+
+
+            String question = data.getExtras().getString("question"); // 'question' needs to match the key we used when we put the string in the Intent
+            String answerRight = data.getExtras().getString("answerRight");
+            String answerWrong1 = data.getExtras().getString("answerWrong1");
+            String answerWrong2 = data.getExtras().getString("answerWrong2");
+
+            questionTextView.setText(question);
+            answerTextView.setText(answerRight);
+
+            answer1TextView.setText(answerRight);
+            answer2TextView.setText(answerWrong1);
+            answer3TextView.setText(answerWrong2);
+
+
+            cardToEdit.setQuestion(question);
+            cardToEdit.setAnswer(answerRight);
+            cardToEdit.setWrongAnswer1(answerWrong1);
+            cardToEdit.setWrongAnswer2(answerWrong2);
+
+            flashcardDatabase.updateCard(cardToEdit);
+
         }
     }
 

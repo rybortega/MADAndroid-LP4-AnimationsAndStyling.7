@@ -25,7 +25,10 @@
         android:id="@+id/flashcard_answer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="#dbdcff"
         android:gravity="center"
         android:text="Barack Obama"
@@ -81,8 +84,8 @@
 
     <ImageView
         android:id="@+id/add_btn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
@@ -91,8 +94,8 @@
 
     <ImageView
         android:id="@+id/edit_btn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="20dp"
@@ -101,8 +104,8 @@
 
     <ImageView
         android:id="@+id/next_btn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="40dp"
@@ -111,12 +114,12 @@
 
     <ImageView
         android:id="@+id/delete_btn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/flashcard_answer3"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
-        android:layout_below="@id/flashcard_answer3"
         android:src="@drawable/icon_delete" />
 
 </RelativeLayout>
