@@ -9,7 +9,7 @@ A simple Flashcard app that allows users to create multiple cards, delete cards,
 
 ### App Walk-though
 
-<img src="https://i.imgur.com/3dQ0v9X.gif" width=900><br>
+<img src="https://i.imgur.com/oxvzgxg.gif" width=900><br>
 
 ## Required
 - [x] User can create a card and still see their created card when the app is relaunched.
