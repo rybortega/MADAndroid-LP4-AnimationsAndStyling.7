@@ -25,6 +25,7 @@ public class AddCardActivity extends AppCompatActivity {
                 Intent intent = new Intent(AddCardActivity.this, MainActivity.class);
                 AddCardActivity.this.startActivity(intent);
                 finish();
+                overridePendingTransition(R.anim.right_out,R.anim.left_in);
 
             }
         });

@@ -5,21 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/parent"
+    android:background="@color/light_blue_1"
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/flashcard_question"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:text="Who is the 44th President of the United States?"
-        android:id="@+id/flashcard_question"
-        android:textSize="40sp"
-        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/card_background"
-        android:textColor="@color/navy"
         android:elevation="5dp"
-        android:layout_margin="20dp"
 
-     />
+        android:gravity="center"
+        android:text="Who is the 44th President of the United States?"
+        android:textColor="@color/navy"
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/flashcard_answer"

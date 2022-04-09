@@ -2,9 +2,13 @@ package com.example.trangsflashcardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.content.SearchRecentSuggestionsProvider;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
@@ -26,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     List<Flashcard> allFlashcards;
     int currentCardDisplayedIndex = 0;
 
-    int ADD_CARD_REQUEST_CODE = 0 ;
+    int ADD_CARD_REQUEST_CODE = 0;
     int EDIT_CARD_REQUEST_CODE = 1;
 
-    Flashcard cardToEdit ;
+    Flashcard cardToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,25 @@ public class MainActivity extends AppCompatActivity {
         questionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+// get the center for the clipping circle
+                int cx = answerTextView.getWidth() / 2;
+                int cy = answerTextView.getHeight() / 2;
+
+// get the final radius for the clipping circle
+                float finalRadius = (float) Math.hypot(cx, cy);
+
+// create the animator for this view (the start radius is zero)
+                Animator anim = ViewAnimationUtils.createCircularReveal(answerTextView, cx, cy, 0f, finalRadius);
+
+// hide the question and show the answer to prepare for playing the animation!
                 questionTextView.setVisibility(View.INVISIBLE);
                 answerTextView.setVisibility(View.VISIBLE);
+
+                anim.setDuration(1000);
+                anim.start();
+
             }
         });
         answerTextView.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +141,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
                 MainActivity.this.startActivityForResult(intent, ADD_CARD_REQUEST_CODE);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 currentCardDisplayedIndex = allFlashcards.size();
+
+
             }
         });
 
@@ -137,15 +161,14 @@ public class MainActivity extends AppCompatActivity {
                 String answerWrong2 = answer3TextView.getText().toString();
 
 
-
                 intent.putExtra("question", question);
                 intent.putExtra("answerRight", answerRight);
                 intent.putExtra("answerWrong1", answerWrong1);
                 intent.putExtra("answerWrong2", answerWrong2);
 
 
-                for(int i = 0; i < allFlashcards.size(); i++){
-                    if(allFlashcards.get(i).getQuestion() == questionTextView.getText()){
+                for (int i = 0; i < allFlashcards.size(); i++) {
+                    if (allFlashcards.get(i).getQuestion() == questionTextView.getText()) {
                         cardToEdit = allFlashcards.get(i);
                         break;
                     }
@@ -192,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int randomIndex = getRandomNumber(0, allFlashcards.size() - 1);
 
-                while (randomIndex == currentCardDisplayedIndex){
+                while (randomIndex == currentCardDisplayedIndex) {
                     randomIndex = getRandomNumber(0, allFlashcards.size() - 1);
                 }
                 Flashcard currentCard = allFlashcards.get(randomIndex);
@@ -202,6 +225,47 @@ public class MainActivity extends AppCompatActivity {
                 answer2TextView.setText(currentCard.getWrongAnswer1());
                 answer3TextView.setText(currentCard.getWrongAnswer2());
                 currentCardDisplayedIndex = randomIndex;
+
+
+                final Animation leftOutAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.left_out);
+                final Animation rightInAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.right_in);
+
+                leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        // this method is called when the animation first starts
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // this method is called when the animation is finished playing
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        // we don't need to worry about this method
+                    }
+                });
+
+                findViewById(R.id.flashcard_question).startAnimation(leftOutAnim);
+                rightInAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        // this method is called when the animation first starts
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // this method is called when the animation is finished playing
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        // we don't need to worry about this method
+                    }
+                });
+                findViewById(R.id.flashcard_question).startAnimation(rightInAnim);
+
 
             }
         });
@@ -265,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
                 flashcardDatabase.insertCard(new Flashcard(question, answerRight, answerWrong1, answerWrong2));
                 allFlashcards = flashcardDatabase.getAllCards();
             }
-        } else if (requestCode == EDIT_CARD_REQUEST_CODE && resultCode == RESULT_OK){
+        } else if (requestCode == EDIT_CARD_REQUEST_CODE && resultCode == RESULT_OK) {
 
 
             String question = data.getExtras().getString("question"); // 'question' needs to match the key we used when we put the string in the Intent
