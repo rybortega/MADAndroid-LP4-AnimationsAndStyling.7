@@ -10,6 +10,8 @@ Animation Flashcard app
 
 ### App Walk-though
 
+<img src="https://i.imgur.com/1U5cYOy.gif" width=900><br>
+
 <img src="https://i.imgur.com/bYxxr3N.gif" width=200><br>
 
 
